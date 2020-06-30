@@ -53,11 +53,23 @@ export class ManageProductComponent implements OnInit {
   onFetchProduct() {
     this.loading = true;
 
-    this._uxProduct.fetchProduct().subscribe(
-      (Response) => {
-        console.log(Response);
-        const data = JSON.stringify(Response);
-        this.peoducts = JSON.parse(data)
+    this._uxProduct.fetchProduct()
+      .pipe(
+      map((responseData:any)=>{
+        const PostArray:Post[]=[];
+        for(const in responseData){
+          if(responseData.hasOwnProperty(key)){
+            PostArray.push({..responseData[key],id:key});
+          }
+        }
+        return postArray;
+      })
+      )
+      .subscribe(
+      (posts) => {
+        console.log(posts);
+//         const data = JSON.stringify(Response);
+        this.peoducts = posts;
         this.loading = false;
       },
       (err) => console.log(err)
