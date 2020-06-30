@@ -1,0 +1,62 @@
+<style>
+  .mr {
+    margin-right: 5px;
+  }
+</style>
+<div class="dark text-center" style="background-color: black; color: white; padding-top: 10px; padding-bottom: 10px;">
+  <h1>CRUD OPERATION</h1>
+</div>
+
+<div class="row">
+  <div class="col-sm-5" style="margin: 20px; background-color: white; padding: 10px; border-radius: 10px;">
+    <div class="card-header">
+      <h3 class="text-center " style="margin-bottom: 5px; font-weight: 600;">Add Data</h3>
+    </div>
+    <div class="card-body">
+      <form>
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Enter Product Id" id="id" #id>
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Enter Product Name" id="name" #name>
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Enter Product Price" id="price" #price>
+        </div>
+        <button type="button" class="btn btn-success mr "
+          (click)="onAddProduct(id, name,price)">{{editMode? 'upadte Product': 'Add Product'}}</button>
+        <button type="button" class="btn btn-info mr" (click)="onSaveProduct()">Save</button>
+        <button type="button" class="btn btn-warning" (click)="onFetchProduct()">Fetch</button>
+      </form>
+    </div>
+  </div>
+  <div class="col-sm-5" style="margin: 20px; background-color: white; padding: 10px; border-radius: 10px;">
+    <h3 class="text-center" style="margin-bottom: 5px; font-weight: 600;">Data</h3>
+    <table class=" table table-dark">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">id</th>
+          <th scope="col">Name</th>
+          <th scope="col">Price</th>
+          <th scope="col">Update</th>
+          <th scope="col">Delete</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="!loading">
+        <tr *ngFor="let prod of peoducts;index as i">
+          <th scope="row">{{i+1}}</th>
+          <td>{{prod.id}}</td>
+          <td>{{prod.name}}</td>
+          <td>{{prod.price}}</td>
+          <td (click)="onEditProduct(i)"><a class="text-danger text-center"><i class="fas fa-edit"></i></a> </td>
+          <td (click)="onDeleteProduct(i)"><a class="text-danger"><i class="fas fa-trash-alt"></i></a> </td>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="loading" class="text-center">
+      Fatching Data...
+    </div>
+
+  </div>
+</div>
